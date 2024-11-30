@@ -1,6 +1,7 @@
-import Card from "./Components/Card/Card"
+import Footer from "./Components/Footer/Footer"
 import Header from "./Components/Header/Header"
 import Hero from "./Components/Hero/Hero"
+import HeroCards from "./Components/HeroCards/HeroCards"
 
 function App() {
 
@@ -9,11 +10,9 @@ function App() {
     <>
     <Header></Header>
     <Hero>
-      <Card></Card>
-      <Card></Card>
-      <Card></Card>
+      <HeroCards></HeroCards>
     </Hero>
-    
+    <Footer></Footer>
     </>
   )
 }
