@@ -57,5 +57,17 @@ namespace api.Repositories
 
             return result;
         }
+
+        public async Task<List<Event>?> GetLatestAsync()
+        {
+            var result = await _context.Events
+                .OrderByDescending(x => x.Date)
+                .Take(3)
+                .ToListAsync();
+
+            if (result == null) return null;
+
+            return result;
+        }
     }
 }

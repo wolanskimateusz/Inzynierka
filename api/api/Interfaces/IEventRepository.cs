@@ -11,6 +11,7 @@ namespace api.Interfaces
         Task<Event> CreateAsync(Event eventModel);
         Task<Event?> UpdateAsync(int id, UpdateEventDto eventDto);
         Task<Event?> DeleteAsync(int id);
+        Task<List<Event>?> GetLatestAsync();
 
     
        

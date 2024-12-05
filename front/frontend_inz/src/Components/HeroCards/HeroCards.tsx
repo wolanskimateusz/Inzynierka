@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react'
 import Card from '../Card/Card'
 import axios from 'axios'
+import {differenceInDays} from "date-fns"
+
 
 interface DataType{
     id: number,
     name: string,
-    descriptios: string,
-    date: Date
-
+    descripton: string,
+    date: string
+    localization: string
 }
 
 function HeroCards(){
@@ -17,7 +19,7 @@ function HeroCards(){
 
     const fetchLatest = async () => {
         try{
-            const response = await axios.get("https://localhost:7109/api/event")
+            const response = await axios.get("https://localhost:7109/api/event/latest")
             setData(response.data)
         }
         catch(e : any){
@@ -28,13 +30,28 @@ function HeroCards(){
     useEffect(() => {
         fetchLatest()
     },[])
+
+    const calculateDaysUntill = (date : string): number => {
+        const now = new Date();
+        const eventDate = new Date(date);
+        return differenceInDays(eventDate, now);
+    }
     
-    return <>
+    return <div className="container">
+        <div className='row'>
+            <div className='col'>
+            {data && data?.length > 0 && <Card name = {data[0].name} days_untill={calculateDaysUntill(data[0].date)} description = {data[0].descripton} localization={data[0].localization}></Card>}
+            </div> 
+            <div className='col'>
+            {data && data?.length > 1 && <Card name = {data[1].name} days_untill={calculateDaysUntill(data[1].date)} description = {data[1].descripton} localization={data[1].localization}></Card>}
+            </div> 
+            <div className='col'>
+            {data && data?.length > 2 && <Card name = {data[2].name} days_untill={calculateDaysUntill(data[2].date)} description = {data[2].descripton} localization={data[2].localization}></Card>}
+            </div>    
+        </div>    
     
-      {data && data?.length > 0 && <Card name = {data[0].name}></Card>}
-      {data && data?.length > 1 && <Card name = {data[1].name}></Card>}
-      {data && data?.length > 2 && <Card name = {data[2].name}></Card>}
-    </>
+      
+    </div>
 }
 
 export default HeroCards

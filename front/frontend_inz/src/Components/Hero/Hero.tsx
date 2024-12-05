@@ -31,7 +31,7 @@ function Hero({children}: Props)
             Przeglądaj wydarzenia
         </a>
          <p className="text-white fs-2 text-decoration-underline mt-5">Nadchodzące wydarzenia</p>
-         <div className=' d-flex flex-row  justify-content-center'>
+         <div className=' d-flex flex-row  justify-content-center w-100'>
             {children}
         </div>
         </div>

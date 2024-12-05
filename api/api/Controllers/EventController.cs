@@ -65,6 +65,15 @@ namespace api.Controllers
             return Ok(result);
         }
 
+        [HttpGet("latest")]
+        public async Task<IActionResult> GetLatest()
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            var result = await _eventRepo.GetLatestAsync();
+            if (result == null) return NotFound();
+            return Ok(result);
+        }
+
        
     }
 }
