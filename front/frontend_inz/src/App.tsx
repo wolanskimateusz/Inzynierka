@@ -1,19 +1,22 @@
 import Footer from "./Components/Footer/Footer"
 import Header from "./Components/Header/Header"
-import Hero from "./Components/Hero/Hero"
-import HeroCards from "./Components/HeroCards/HeroCards"
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
+import HeroPage from "./Pages/HeroPage/HeroPage"
+import EventPage from "./Pages/EventsPage/EventPage"
+
 
 function App() {
 
 
   return (
-    <>
-    <Header></Header>
-    <Hero>
-      <HeroCards></HeroCards>
-    </Hero>
-    <Footer></Footer>
-    </>
+    <Router>
+      <Header></Header>
+      <Routes>
+        <Route path="/" element={<HeroPage />} />
+        <Route path='/events' element={<EventPage />} />
+      </Routes>
+      <Footer></Footer>
+    </Router>
   )
 }
 
