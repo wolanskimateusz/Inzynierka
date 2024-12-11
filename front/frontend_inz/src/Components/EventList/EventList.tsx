@@ -31,6 +31,19 @@ function EventList(){
         fetchEvents()
     },[])
 
+    const formatDate = (dateString: string): string => {
+        const date = new Date(dateString);
+
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+
+        return `${year}-${month}-${day} ${hours}:${minutes}`;
+    };
+
+
 
     return <div className=" bg-dark py-3">
         {error && <div className="alert alert-danger">{error}</div>}
@@ -43,7 +56,7 @@ function EventList(){
                         <li key={event.id} className="list-group-item list-group-item-action hover">
                             <h5>{event.name}</h5>
                             <p>{event.descripton}</p>
-                            <small>{event.date}</small>
+                            <small>{formatDate(event.date)}</small>
                         </li>
                     </Link>
                     ))}
