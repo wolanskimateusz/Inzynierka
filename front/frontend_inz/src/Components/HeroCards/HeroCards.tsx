@@ -5,7 +5,6 @@ import {differenceInDays} from "date-fns"
 
 
 interface DataType{
-    id: number,
     name: string,
     descripton: string,
     date: string
@@ -38,6 +37,10 @@ function HeroCards(){
     }
     
     return <div className="container">
+        {error && <div className="alert alert-danger">{error}</div>}
+        {data === null ? (
+                <p>Loading...</p>
+            ) : (
         <div className='row'>
             <div className='col'>
             {data && data?.length > 0 && <Card name = {data[0].name} days_untill={calculateDaysUntill(data[0].date)} description = {data[0].descripton} localization={data[0].localization}></Card>}
@@ -47,9 +50,9 @@ function HeroCards(){
             </div> 
             <div className='col'>
             {data && data?.length > 2 && <Card name = {data[2].name} days_untill={calculateDaysUntill(data[2].date)} description = {data[2].descripton} localization={data[2].localization}></Card>}
-            </div>    
+            </div> 
         </div>    
-    
+     )}  
       
     </div>
 }
