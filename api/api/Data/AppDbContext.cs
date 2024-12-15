@@ -15,6 +15,7 @@ namespace api.Data
 
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Event> Events { get; set; }
+        public DbSet<Artist> Artists { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
