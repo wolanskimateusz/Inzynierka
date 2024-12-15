@@ -15,7 +15,7 @@ namespace api.Repositories
             _context = context;
         }
 
-        public async Task<Artist> CreateAsync(Artist artistModel)
+        public async Task<Artist?> CreateAsync(Artist artistModel)
         {
             await _context.AddAsync(artistModel);
             await _context.SaveChangesAsync();
@@ -23,7 +23,7 @@ namespace api.Repositories
             return artistModel;
         }
 
-        public async Task<Artist> DeleteAsync(int id)
+        public async Task<Artist?> DeleteAsync(int id)
         {
             var result = await _context.Artists.FirstOrDefaultAsync(x => x.Id == id);
             if (result == null) return null;
@@ -34,19 +34,39 @@ namespace api.Repositories
 
         }
 
-        public Task<List<Artist?>> GetAllAsync()
+        public async Task<List<Artist>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var result = await _context.Artists.ToListAsync();
+
+            return result;
         }
 
-        public Task<Artist?> GetByIdAsync(int id)
+        public async Task<Artist?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var result = await _context.Artists.FirstOrDefaultAsync(x => x.Id == id);
+            if (result == null) return null;
+
+            return result;
         }
 
-        public Task<Artist> UpdateAsync(int id, UpdateArtistDto artistDto)
+        public async Task<List<string>> GetGenresAsync()
         {
-            throw new NotImplementedException();
+            var result = await _context.Artists.Select(x => x.Genre).Distinct().ToListAsync();
+
+            return result;
+        }
+
+        public async Task<Artist?> UpdateAsync(int id, UpdateArtistDto artistDto)
+        {
+            var result = await _context.Artists.FirstOrDefaultAsync(x =>x.Id == id);
+            if (result == null) return null;
+
+            result.Name = artistDto.Name;
+            result.Genre = artistDto.Genre;
+
+            await _context.SaveChangesAsync();
+
+            return result;
         }
     }
 }
