@@ -2,6 +2,8 @@
 using api.Dtos.Event;
 using api.Interfaces;
 using api.Models;
+using api.Mappers;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Repositories
@@ -32,14 +34,14 @@ namespace api.Repositories
 
         public async Task<List<Event>> GetAllAsync()
         {
-            var results = await _context.Events.ToListAsync();
+            var results = await _context.Events.Include(x => x.Artists).ToListAsync();
 
             return results;
         }
 
         public async Task<Event?> GetByIdAsync(int id)
         {
-           return await _context.Events.FirstOrDefaultAsync(e => e.Id == id);
+           return await _context.Events.Include(x => x.Artists).FirstOrDefaultAsync(e => e.Id == id);
         }
 
         public async Task<Event?> UpdateAsync(int id, UpdateEventDto eventDto)
@@ -60,7 +62,7 @@ namespace api.Repositories
 
         public async Task<List<Event>?> GetLatestAsync()
         {
-            var result = await _context.Events
+            var result = await _context.Events.Include(x => x.Artists)
                 .OrderByDescending(x => x.Date)
                 .Take(3)
                 .ToListAsync();
@@ -69,5 +71,42 @@ namespace api.Repositories
 
             return result;
         }
+
+        // Artist List
+
+        public async Task<List<Artist>?> AddArtistToEventAsync(int eventId, int artistId)
+        {
+            var artistResult = await _context.Artists.FirstOrDefaultAsync(x => x.Id == artistId);
+            if(artistResult == null) return null;
+      
+            var eventResult = await _context.Events.FirstOrDefaultAsync(x => x.Id == eventId);
+            if (eventResult == null) return null;
+
+            artistResult.EventId = eventId;
+            eventResult.Artists.Add(artistResult);
+            await _context.SaveChangesAsync();
+
+
+            return eventResult.Artists;
+
+        }
+
+        public async Task<Artist?> DeleteArtistFromEventAsync(int eventId, int artistId)
+        {
+            var eventResult = await _context.Events.FirstOrDefaultAsync(x => x.Id == eventId);
+            if (eventResult == null) return null;
+
+            var artistResult = await _context.Artists.FirstOrDefaultAsync(x => x.Id == artistId);
+            if (artistResult == null) return null;
+
+            eventResult.Artists.Remove(artistResult);
+            artistResult.EventId = null;
+
+            await _context.SaveChangesAsync();
+
+            return artistResult;
+        }
+
+
     }
 }

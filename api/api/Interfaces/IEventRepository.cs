@@ -13,7 +13,11 @@ namespace api.Interfaces
         Task<Event?> DeleteAsync(int id);
         Task<List<Event>?> GetLatestAsync();
 
-    
-       
+
+
+        Task<List<Artist>?> AddArtistToEventAsync(int eventId, int artistId);
+        Task<Artist?> DeleteArtistFromEventAsync(int eventId, int artistId);
+
+
     }
 }

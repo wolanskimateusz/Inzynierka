@@ -1,4 +1,5 @@
 ﻿using api.Dtos.Event;
+using api.Migrations;
 using api.Models;
 using System.Runtime.CompilerServices;
 
@@ -13,7 +14,8 @@ namespace api.Mappers
                 Name = eventDto.Name,
                 Descripton = eventDto.Descripton,
                 Date = eventDto.Date,
-                Localization = eventDto.Localization
+                Localization = eventDto.Localization,
+                Artists = new List<Artist>()
             };
 
         }
@@ -26,7 +28,8 @@ namespace api.Mappers
                 Name = eventModel.Name,
                 Descripton = eventModel.Descripton,
                 Date = eventModel.Date,
-                Localization = eventModel.Localization
+                Localization = eventModel.Localization,
+                Artists = eventModel.Artists
             };
         }
     }

@@ -12,7 +12,7 @@ namespace api.Models
         public DateTime Date { get; set; }
         public string Localization { get; set; } = string.Empty;
 
-        public List<Artist> Artists { get; set; }
+        public List<Artist> Artists { get; set; } = new List<Artist>();
 
     }
 }

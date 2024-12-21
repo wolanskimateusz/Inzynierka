@@ -40,9 +40,44 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateArtist([FromBody] CreateArtistDto artistDto)
+        public async Task<IActionResult> Create([FromBody] CreateArtistDto artistDto)
         {
+            if(!ModelState.IsValid)  return BadRequest(ModelState); 
 
+            var artistModel = artistDto.ToArtistFromCreateDto();
+            await _artistRepo.CreateAsync(artistModel);
+
+            return CreatedAtAction(nameof(GetById), new { id = artistModel.Id }, artistModel.ToArtistDto());
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateArtistDto aristModel)
+        {
+            if(!ModelState.IsValid) return BadRequest(ModelState);
+
+            var result = await _artistRepo.UpdateAsync(id, aristModel);
+            if (result == null) return NotFound();
+            return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            var result = await _artistRepo.DeleteAsync(id);
+            if (result == null) return NotFound();
+
+            return Ok(result);
+        }
+        [HttpGet("genres")]
+        public async Task<IActionResult> GetGenres()
+        {
+            if(!ModelState.IsValid) return BadRequest(ModelState);
+            var result = await _artistRepo.GetGenresAsync();
+            if (result == null) return NotFound();
+
+            return Ok(result);
         }
     }
+
 }

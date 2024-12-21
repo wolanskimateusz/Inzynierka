@@ -11,6 +11,7 @@ namespace api.Interfaces
         Task<Artist?> UpdateAsync(int id, UpdateArtistDto artistDto);
         Task<Artist?> DeleteAsync(int id);
         Task<List<String>> GetGenresAsync();
+        Task<List<Artist>?> GetArtistsByGenreAsync(string genre);
            
 
     }

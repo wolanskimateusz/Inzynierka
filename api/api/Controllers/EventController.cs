@@ -1,4 +1,5 @@
 ﻿using api.Data;
+using api.Dtos.Artist;
 using api.Dtos.Event;
 using api.Interfaces;
 using api.Mappers;
@@ -11,9 +12,11 @@ namespace api.Controllers
     public class EventController : ControllerBase
     {
         private readonly IEventRepository _eventRepo;
-        public EventController(IEventRepository eventRepo)
+        private readonly IArtistRepository _artistRepo;
+        public EventController(IEventRepository eventRepo, IArtistRepository artistRepo)
         {
             _eventRepo = eventRepo;
+            _artistRepo = artistRepo;
         }
 
         [HttpGet]
@@ -74,6 +77,45 @@ namespace api.Controllers
             return Ok(result);
         }
 
-       
+        [HttpPut("artist")]
+        public async Task<IActionResult> AddArtist(int artistId, int eventId)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            var result = await _eventRepo.AddArtistToEventAsync(eventId, artistId);
+
+            if (result == null) return BadRequest(result);
+
+            return Ok(result);
+        }
+
+
+        [HttpPut("artistnew")]
+        public async Task<IActionResult> AddNewArtist([FromBody] CreateArtistDto artist, int eventId)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            var newArtist = await _artistRepo.CreateAsync(artist.ToArtistFromCreateDto());
+
+            if (newArtist == null) return BadRequest(newArtist);
+
+            var result = await _eventRepo.AddArtistToEventAsync(eventId, newArtist.Id);
+
+            if (result == null) return BadRequest(result);
+
+            return Ok(result);
+        }
+
+
+        [HttpDelete("artist")]
+        public async Task<IActionResult> DeleteArtist(int eventId, int artistId)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var result = await _eventRepo.DeleteArtistFromEventAsync(eventId, artistId);
+
+            if (result == null) return NotFound();
+
+            return Ok(result);
+        }
+        
     }
 }

@@ -41,6 +41,14 @@ namespace api.Repositories
             return result;
         }
 
+        public async Task<List<Artist>?> GetArtistsByGenreAsync(string genre)
+        {
+            var result = await _context.Artists.Where(x => x.Genre == genre).ToListAsync();
+            if (!result.Any()) return null;
+
+            return result;
+        }
+
         public async Task<Artist?> GetByIdAsync(int id)
         {
             var result = await _context.Artists.FirstOrDefaultAsync(x => x.Id == id);
