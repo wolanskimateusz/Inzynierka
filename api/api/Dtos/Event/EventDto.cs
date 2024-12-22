@@ -1,6 +1,6 @@
 ﻿namespace api.Dtos.Event
 {
-    using api.Models;
+    using api.Dtos.Artist;
 
     public class EventDto
     {
@@ -9,6 +9,6 @@
         public string Descripton { get; set; } = string.Empty;
         public DateTime Date { get; set; }
         public string Localization { get; set; } = string.Empty;
-        public List<Artist>? Artists {  get; set; }
+        public List<ArtistDto>? Artists {  get; set; }
     }
 }

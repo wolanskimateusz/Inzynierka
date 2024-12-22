@@ -5,6 +5,8 @@ using api.Models;
 using api.Mappers;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using api.Dtos.Artist;
 
 namespace api.Repositories
 {
@@ -34,14 +36,17 @@ namespace api.Repositories
 
         public async Task<List<Event>> GetAllAsync()
         {
-            var results = await _context.Events.Include(x => x.Artists).ToListAsync();
+            var results = await _context
+                .Events
+                .Include(x => x.Artists).ToListAsync();
 
             return results;
         }
 
         public async Task<Event?> GetByIdAsync(int id)
         {
-           return await _context.Events.Include(x => x.Artists).FirstOrDefaultAsync(e => e.Id == id);
+           return await _context.Events.Include(x => x.Artists)
+           .FirstOrDefaultAsync(e => e.Id == id);
         }
 
         public async Task<Event?> UpdateAsync(int id, UpdateEventDto eventDto)
