@@ -57,9 +57,12 @@ namespace api.Repositories
             return result;
         }
 
-        public async Task<List<string>> GetGenresAsync()
+        public async Task<List<GenreDto>> GetGenresAsync()
         {
-            var result = await _context.Artists.Select(x => x.Genre).Distinct().ToListAsync();
+            var result = await _context.Artists
+                .Select(x => new GenreDto { Name = x.Genre })
+                .Distinct()
+                .ToListAsync();
 
             return result;
         }

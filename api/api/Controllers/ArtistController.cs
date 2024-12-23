@@ -78,6 +78,15 @@ namespace api.Controllers
 
             return Ok(result);
         }
+        [HttpGet("${genre}")]
+        public async Task<IActionResult> GetArtistByGenre([FromRoute] string genre)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var result = await _artistRepo.GetArtistsByGenreAsync(genre);
+            if(result == null) return NotFound();
+            return Ok(result);
+        }
     }
 
 }

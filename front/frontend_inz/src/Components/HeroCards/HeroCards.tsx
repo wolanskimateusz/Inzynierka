@@ -36,12 +36,12 @@ function HeroCards(){
         return differenceInDays(eventDate, now);
     }
     
-    return <div className="container">
+    return <div className="container" style = {{backgroundColor: "rgba(255,255,255,0.8)"}}>
         {error && <div className="alert alert-danger">{error}</div>}
         {data === null ? (
                 <p>Loading...</p>
             ) : (
-        <div className='row'>
+        <div className='row '>
             <div className='col'>
             {data && data?.length > 0 && <Card name = {data[0].name} days_untill={calculateDaysUntill(data[0].date)} description = {data[0].descripton} localization={data[0].localization}></Card>}
             </div> 
