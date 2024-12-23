@@ -78,7 +78,7 @@ namespace api.Controllers
 
             return Ok(result);
         }
-        [HttpGet("${genre}")]
+        [HttpGet("genre/{genre}")]
         public async Task<IActionResult> GetArtistByGenre([FromRoute] string genre)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);

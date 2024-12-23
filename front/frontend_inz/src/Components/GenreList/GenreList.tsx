@@ -35,7 +35,7 @@ function GenreList(){
         ) : (
             <ul className="list-group">
                 {data.map((genre) => (
-                <Link to={`/artist/${genre.name}`} className="text-decoration-none text-white" key={genre.name}>
+                <Link to={`/artist/genre/${genre.name}`} className="text-decoration-none text-white" key={genre.name}>
                     <li  className="list-group-item list-group-item-action hover">
                         <h5>{genre.name}</h5>
                     </li>
