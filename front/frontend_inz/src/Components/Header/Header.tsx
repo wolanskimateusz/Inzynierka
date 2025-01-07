@@ -47,7 +47,7 @@ function Header()
         {/* Przyciski CTA */}
         <div>
           <a href="/login" className="btn btn-outline-light mr-2">Login</a>
-          <a href="/signup" className="btn btn-danger">Sign Up</a>
+          <a href="/register" className="btn btn-danger">Sign Up</a>
         </div>
       </div>
     </header>

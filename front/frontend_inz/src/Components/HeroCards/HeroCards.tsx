@@ -5,6 +5,7 @@ import {differenceInDays} from "date-fns"
 
 
 interface DataType{
+    id: number
     name: string,
     descripton: string,
     date: string
@@ -43,13 +44,13 @@ function HeroCards(){
             ) : (
         <div className='row '>
             <div className='col'>
-            {data && data?.length > 0 && <Card name = {data[0].name} days_untill={calculateDaysUntill(data[0].date)} description = {data[0].descripton} localization={data[0].localization}></Card>}
+            {data && data?.length > 0 && <Card name = {data[0].name} days_untill={calculateDaysUntill(data[0].date)} description = {data[0].descripton} localization={data[0].localization} id = {data[0].id}></Card>}
             </div> 
             <div className='col'>
-            {data && data?.length > 1 && <Card name = {data[1].name} days_untill={calculateDaysUntill(data[1].date)} description = {data[1].descripton} localization={data[1].localization}></Card>}
+            {data && data?.length > 1 && <Card name = {data[1].name} days_untill={calculateDaysUntill(data[1].date)} description = {data[1].descripton} localization={data[1].localization} id = {data[1].id}></Card>}
             </div> 
             <div className='col'>
-            {data && data?.length > 2 && <Card name = {data[2].name} days_untill={calculateDaysUntill(data[2].date)} description = {data[2].descripton} localization={data[2].localization}></Card>}
+            {data && data?.length > 2 && <Card name = {data[2].name} days_untill={calculateDaysUntill(data[2].date)} description = {data[2].descripton} localization={data[2].localization} id = {data[2].id}></Card>}
             </div> 
         </div>    
      )}  

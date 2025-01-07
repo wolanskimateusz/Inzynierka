@@ -71,8 +71,12 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 
 builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
 {
-    options.Password.RequiredLength = 5;
-    //wszystkie wartosci hasla tutaj
+    options.Password.RequireDigit = false;            // Nie wymaga cyfr w haœle
+    options.Password.RequireLowercase = false;        // Nie wymaga ma³ych liter
+    options.Password.RequireNonAlphanumeric = false;  // Nie wymaga znaków specjalnych
+    options.Password.RequireUppercase = false;        // Nie wymaga du¿ych liter
+    options.Password.RequiredLength = 1;              // Minimalna d³ugoœæ has³a
+    options.Password.RequiredUniqueChars = 0;         // Minimalna liczba unikalnych znaków
 
 }).AddEntityFrameworkStores<AppDbContext>();
 

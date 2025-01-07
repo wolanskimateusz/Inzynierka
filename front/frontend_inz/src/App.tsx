@@ -8,6 +8,8 @@ import GenresPage from "./Pages/GenresPage/GenresPage"
 import ArtistPage from "./Pages/ArtistPage/AtristPage"
 import ArtistDetails from "./Pages/ArtistDetails/ArtistDetails"
 import ArtistsGenresPage from "./Pages/ArtistGenresPage/ArtistGenresPage"
+import Login from "./Pages/Login/Login"
+import Register from "./Pages/Register/Register"
 
 
 function App() {
@@ -24,6 +26,8 @@ function App() {
         <Route path='/artists' element={<ArtistPage />} />
         <Route path='/artist/id/:id' element={<ArtistDetails />} />
         <Route path='/artist/genre/:genre' element={<ArtistsGenresPage />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
       </Routes>
       <Footer></Footer>
     </Router>
