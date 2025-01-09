@@ -24,14 +24,12 @@ function Hero({children}: Props)
         <div className='text-white fw-bold  h-25 display-4 p-5 text-center'>
             Przeżyj niezapomniane emocje z twoimi ulubionymi artystami
          </div>
-         <Link to={`/events`}>
-         <a href="#" className="btn btn-danger btn-lg m-5"
-         style={{
+         <Link to={`/events`} className="btn btn-danger btn-lg m-5"
+          style={{
             fontSize: '1.5rem', 
             padding: '20px 40px',
           }}>
-            Przeglądaj wydarzenia
-        </a>
+          Przeglądaj wydarzenia
         </Link>
          <p className="text-white fs-2 text-decoration-underline mt-5">Nadchodzące wydarzenia</p>
          <div className=' d-flex flex-row  justify-content-center w-100'>

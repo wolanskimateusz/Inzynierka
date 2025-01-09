@@ -1,5 +1,10 @@
+import { useAuth } from "../../Context/useAuth"
+
 function Header()
 {
+
+  const { isLoggedIn, logout } = useAuth()
+
     return (
     <header className="bg-dark py-3">
       <div className="container d-flex justify-content-between align-items-center">
@@ -14,19 +19,16 @@ function Header()
         <nav className="navbar navbar-expand-lg">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <a href="/" className="nav-link text-white">Home</a>
+              <a href="/" className="nav-link text-white">Główna</a>
             </li>
             <li className="nav-item">
-              <a href="/events" className="nav-link text-white">Events</a>
+              <a href="/events" className="nav-link text-white">Wydarzenia</a>
             </li>
             <li className="nav-item">
-              <a href="/artists" className="nav-link text-white">Artists</a>
+              <a href="/artists" className="nav-link text-white">Artyści</a>
             </li>
             <li className="nav-item">
-              <a href="/genres" className="nav-link text-white">Genres</a>
-            </li>
-            <li className="nav-item">
-              <a href="/contact" className="nav-link text-white">Contact</a>
+              <a href="/genres" className="nav-link text-white">Gatunki</a>
             </li>
           </ul>
         </nav>
@@ -40,15 +42,22 @@ function Header()
             aria-label="Search concerts"
           />
           <div className="input-group-append">
-            <button className="btn btn-outline-light" type="button">Search</button>
+            <button className="btn btn-outline-light" type="button">Wyszukaj</button>
           </div>
         </div>
 
-        {/* Przyciski CTA */}
-        <div>
-          <a href="/login" className="btn btn-outline-light mr-2">Login</a>
-          <a href="/register" className="btn btn-danger">Sign Up</a>
+        {isLoggedIn() ? (
+          <div>
+          <a href="/profile" className="btn btn-outline-light mr-2">Profil</a>
+          <button type="button" onClick={logout} className="btn btn-danger">Wyloguj się</button>
         </div>
+        ): (
+          <div>
+          <a href="/login" className="btn btn-outline-light mr-2">Logowanie</a>
+          <a href="/register" className="btn btn-danger">Rejestracja</a>
+        </div>
+        )}
+        
       </div>
     </header>
 )

@@ -10,6 +10,10 @@ import ArtistDetails from "./Pages/ArtistDetails/ArtistDetails"
 import ArtistsGenresPage from "./Pages/ArtistGenresPage/ArtistGenresPage"
 import Login from "./Pages/Login/Login"
 import Register from "./Pages/Register/Register"
+import { ToastContainer } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
+import { UserProvider } from "./Context/useAuth"
+import ProfilePage from "./Pages/ProfilePage/ProfilePage"
 
 
 function App() {
@@ -17,6 +21,8 @@ function App() {
 
   return (
     <Router>
+      <UserProvider>
+      <ToastContainer />
       <Header></Header>
       <Routes>
         <Route path="/" element={<HeroPage />} />
@@ -28,8 +34,10 @@ function App() {
         <Route path='/artist/genre/:genre' element={<ArtistsGenresPage />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/profile' element={<ProfilePage />} />
       </Routes>
       <Footer></Footer>
+      </UserProvider>
     </Router>
   )
 }

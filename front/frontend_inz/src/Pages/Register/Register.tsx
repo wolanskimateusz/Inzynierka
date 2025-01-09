@@ -1,80 +1,64 @@
-import axios from "axios";
-import { useState } from "react";
+import * as Yup from "yup"
+import { useAuth } from "../../Context/useAuth"
+import { yupResolver } from "@hookform/resolvers/yup"
+import { useForm } from "react-hook-form"
 
-interface RegisterData
-{
+type RegisterFormInputs = {
     username: string
     email: string
     password: string
-    confirmPassword: string
 }
+
+const validation = Yup.object().shape({
+  email: Yup.string().required("Email nie może być pusty"),
+  username: Yup.string().required("Nazwa nie może być pusta"),
+  password: Yup.string().required("Hasło nie może być puste")
+})
 
 function Register()
 {
-    const [formData, setFormData] = useState<RegisterData>({ username: '', email: '', password: '', confirmPassword: '' });
-    const [error, setError] = useState<string | null>(null);
+   const {registerUser} = useAuth();
+     const {register, handleSubmit, formState:{errors}} = useForm<RegisterFormInputs>({resolver: yupResolver(validation)})
+   
+     const handleRegister = (form: RegisterFormInputs) => {
+        registerUser(form.email, form.username, form.password)
+     }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (formData.password !== formData.confirmPassword) {
-        setError("Hasła muszą być takie same!");
-        return;
-      }
-  
-      setError(null);
-    try {
-      await axios.post('https://localhost:7109/api/account/register', {
-        username: formData.username,
-        email: formData.email,
-        password: formData.password,
-      });
-
-      alert('Rejestracja zakończona sukcesem!');
-    } catch (error) {
-      alert('Rejestracja nie powiodła się!');
-    }
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <h2>Rejestracja</h2>
-      <input
-        name="username"
-        placeholder="Nazwa użytkownika"
-        value={formData.username}
-        onChange={handleChange}
-      />
-      <input
-        type="email"
-        name="email"
-        placeholder="Email"
-        value={formData.email}
-        onChange={handleChange}
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="Hasło"
-        value={formData.password}
-        onChange={handleChange}
-      />
-      <input
-        type="password"
-        name="confirmPassword"
-        placeholder="Potwierdź hasło"
-        value={formData.confirmPassword}
-        onChange={handleChange}
-      />
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <button type="submit">Zarejestruj się</button>
-    </form>
-  );
+  return <section className="bg-light">
+  <div className="d-flex flex-column align-items-center justify-content-center p-6 mx-auto vh-100">
+    <div className="w-50 bg-white rounded-lg shadow border mb-5 bg-white p-4">
+      <div className="p-6 space-y-4 sm:p-8">
+        <h1 className="h3 font-weight-bold text-dark">
+          Rejestracja
+        </h1>
+        <form className="space-y-4" onSubmit={handleSubmit(handleRegister)}>
+        <div>
+            <label htmlFor="email" className="form-label text-dark"> Email</label>
+            <input type="text" id="email" className="form-control"placeholder="Email"
+              {...register("email")} />
+              {errors.email ? <p>{errors.email.message}</p>: ""}
+          </div>
+          <div>
+            <label htmlFor="username" className="form-label text-dark"> Nazwa użytkownika</label>
+            <input type="text" id="username" className="form-control"placeholder="Nazwa użytkownika"
+              {...register("username")} />
+              {errors.username ? <p>{errors.username.message}</p>: ""}
+          </div>
+          <div>
+            <label htmlFor="password" className="form-label text-dark"> Hasło </label>
+            <input type="password" id="password" placeholder="••••••••" className="form-control"
+              {...register("password")}/>
+              {errors.password ? <p>{errors.password.message}</p>: ""}
+          </div>
+          <button type="submit" className="btn btn-primary w-100 mt-3" >
+            Zarejestruj się
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
 }
 
 export default Register

@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 interface DataType{
     id: number,
@@ -28,27 +28,40 @@ function ArtistList(){
         fetchArtist()
     },[] )
 
+    const navigate = useNavigate()
 
-    return <div className=" bg-dark py-3">
-    {error && <div className="alert alert-danger">{error}</div>}
-    {data === null ? (
+    return (
+        <div className="bg-dark py-3">
+          {error && <div className="alert alert-danger">{error}</div>}
+          {data === null ? (
             <p>Loading...</p>
-        ) : (
-            <ul className='list-group'>
-                {data.map((artist) => (
-
-                    <Link to={`/artist/id/${artist.id}`} className="text-decoration-none text-white" key={artist.id} >
-                     <li  className="list-group-item list-group-item-action hover">
-                        <h5>{artist.name}</h5>
-                       <Link to={`/artist/genre/${artist.genre}`}>
-                       <li  className="list-group-item list-group-item-action hover"> <h5>{artist.genre}</h5> </li></Link>
-                    </li>
+          ) : (
+            <ul className="list-group">
+              {data.map((artist) => (
+                <li
+                  className="list-group-item list-group-item-action hover"
+                  key={artist.id}
+                  onClick={() => navigate(`/artist/id/${artist.id}`)} // Cały prostokąt przekierowuje do szczegółów artysty
+                  style={{ cursor: "pointer" }} // Zmieniamy wskaźnik kursora
+                >
+                  <div >
+                    <h5>{artist.name}</h5>
+                    <Link
+                      to={`/artist/genre/${artist.genre}`}
+                      className="text-decoration-none text-primary"
+                      onClick={(e) => e.stopPropagation()} // Zatrzymujemy propagację, aby kliknięcie nie wywołało nawigacji rodzica
+                    >
+                      {artist.genre}
                     </Link>
-                ))}
-
+                  </div>
+                </li>
+              ))}
             </ul>
-         )}
-    </div>
+          )}
+        </div>
+      );
+      
+      
 }
 
 export default ArtistList
