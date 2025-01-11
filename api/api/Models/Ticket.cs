@@ -12,5 +12,7 @@ namespace api.Models
 
         public Event? Event { get; set; }
         public int EventId { get; set; }
+
+        public AppUser? Owner { get; set; }
     }
 }

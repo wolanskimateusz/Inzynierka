@@ -10,5 +10,6 @@ namespace api.Dtos.Ticket
         [Column(TypeName = "decimal(10,2)")]
         public decimal Price { get; set; }
         public string EventName { get; set; } = string.Empty;
+        public string UserName {  get; set; } = string.Empty;
     }
 }
