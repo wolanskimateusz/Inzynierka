@@ -12,9 +12,13 @@ namespace api.Mappers
                 Name = user.UserName,
                 Email = user.Email,
                 Tickets = user.Tickets
-                    .Where(t => t.Event != null) // Pomijamy bilety bez eventu
-                    .Select(t => t.Event.Name)  // Mapujemy tylko nazwę eventu
-                    .ToList()
+            .Where(t => t.Event != null) // Pomijamy bilety bez przypisanego eventu
+            .Select(t => new UserTicketDto
+            {
+                Id = t.Id,          // ID biletu
+                EventName = t.Event.Name  // Nazwa eventu
+            })
+            .ToList()
             };
         }
     }

@@ -14,6 +14,7 @@ import { ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 import { UserProvider } from "./Context/useAuth"
 import ProfilePage from "./Pages/ProfilePage/ProfilePage"
+import TicketDetails from "./Pages/TicketDetails/TicketDetails"
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/profile' element={<ProfilePage />} />
+        <Route path='/ticket/:id' element={<TicketDetails />} />
       </Routes>
       <Footer></Footer>
       </UserProvider>

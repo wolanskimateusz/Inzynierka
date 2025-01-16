@@ -15,7 +15,9 @@ namespace api.Mappers
                 Type = ticketModel.Type,
                 Price = ticketModel.Price,
                 EventName = ticketModel.Event.Name,
-                UserName = ticketModel.Owner.UserName
+                UserName = ticketModel.Owner.UserName,
+                EventId = ticketModel.EventId
+                
             };
         }
 
