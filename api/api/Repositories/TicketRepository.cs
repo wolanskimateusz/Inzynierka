@@ -1,6 +1,7 @@
 ﻿using api.Data;
 using api.Dtos.Ticket;
 using api.Interfaces;
+using api.Mappers;
 using api.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
@@ -26,7 +27,7 @@ namespace api.Repositories
         public async Task<Ticket?> DeleteAsync(int id)
         {
             var result = await _context.Tickets.FirstOrDefaultAsync(x => x.Id == id);
-            if (result == null) { return null; }
+            if (result == null)  return null; 
             _context.Tickets.Remove(result);
             await _context.SaveChangesAsync();
             return result;

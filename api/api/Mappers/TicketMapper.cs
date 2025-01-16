@@ -14,7 +14,8 @@ namespace api.Mappers
                 Id = ticketModel.Id,
                 Type = ticketModel.Type,
                 Price = ticketModel.Price,
-                EventName = ticketModel.Event.Name
+                EventName = ticketModel.Event.Name,
+                UserName = ticketModel.Owner.UserName
             };
         }
 
@@ -24,6 +25,7 @@ namespace api.Mappers
             {
                 Type = ticketDto.Type,
                 Price = ticketDto.Price,
+                EventId = ticketDto.EventId,
             };
         }
     }

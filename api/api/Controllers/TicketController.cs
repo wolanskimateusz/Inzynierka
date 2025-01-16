@@ -13,12 +13,14 @@ namespace api.Controllers
     {
         private readonly ITicketRepository _ticketRepo;
         private readonly IEventRepository _eventRepo;
+        private readonly IUserRepository _userRepo;
 
 
-        public TicketController(ITicketRepository ticketRepo, IEventRepository eventRepo)
+        public TicketController(ITicketRepository ticketRepo, IEventRepository eventRepo, IUserRepository userRepo)
         {
             _ticketRepo = ticketRepo;
             _eventRepo = eventRepo; 
+            _userRepo = userRepo;
         }
 
         [HttpGet]
@@ -51,8 +53,12 @@ namespace api.Controllers
            var result = await _eventRepo.GetByIdAsync(ticketDto.EventId);
             if (result == null) return BadRequest("Event does not exist");
 
+            var userResult = await _userRepo.GetByNameAsync(ticketDto.Owner);
+            if (userResult == null) return BadRequest("User not found");
+
            var ticketModel = ticketDto.ToTicketFromCreateDto();
             ticketModel.Event = result;
+            ticketModel.Owner = userResult;
            await _ticketRepo.CreateAsync(ticketModel);
 
             return CreatedAtAction(nameof(GetById), new { id = ticketModel.Id }, ticketModel.ToTicketDto());

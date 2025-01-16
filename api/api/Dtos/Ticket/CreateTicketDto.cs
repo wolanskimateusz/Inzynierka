@@ -9,6 +9,7 @@ namespace api.Dtos.Ticket
         [Column(TypeName = "decimal(10,2)")]
         public decimal Price { get; set; }
         public int EventId { get; set; }
+        public string Owner { get; set; } = string.Empty;
        
 
     }

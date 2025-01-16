@@ -4,6 +4,7 @@ using api.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using api.Mappers;
 
 
 namespace api.Controllers
@@ -15,11 +16,13 @@ namespace api.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly ITokenService _tokenService;
         private readonly SignInManager<AppUser> _signInManager;
-        public AccountController(UserManager<AppUser> userManager, ITokenService tokenService, SignInManager<AppUser> signInManager)
+        private readonly IUserRepository _userRepository;
+        public AccountController(UserManager<AppUser> userManager, ITokenService tokenService, SignInManager<AppUser> signInManager, IUserRepository userRepository)
         {
             _userManager = userManager;
             _tokenService = tokenService;
             _signInManager = signInManager;
+            _userRepository = userRepository;
         }
 
         [HttpPost("register")]
@@ -83,8 +86,16 @@ namespace api.Controllers
                     Token = _tokenService.CreateToken(user)
                 });
                 
-            
 
+        }
+        [HttpGet("user")]
+        public async Task<IActionResult> GetUserByName(string name)
+        {
+            if(!ModelState.IsValid) return BadRequest(ModelState);
+            
+            var user = await _userRepository.GetByNameAsync(name);
+            if (user == null) return NotFound();
+            return Ok(user.ToUserDto());
         }
     }
 }
