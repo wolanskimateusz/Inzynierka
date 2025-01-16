@@ -15,6 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { UserProvider } from "./Context/useAuth"
 import ProfilePage from "./Pages/ProfilePage/ProfilePage"
 import TicketDetails from "./Pages/TicketDetails/TicketDetails"
+import BuyTicket from "./Pages/BuyTicket/BuyTicket"
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/profile' element={<ProfilePage />} />
         <Route path='/ticket/:id' element={<TicketDetails />} />
+        <Route path='/BuyTicket/:id' element={<BuyTicket />} />
       </Routes>
       <Footer></Footer>
       </UserProvider>

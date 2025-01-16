@@ -16,7 +16,10 @@ namespace api.Mappers
                 Descripton = eventDto.Descripton,
                 Date = eventDto.Date,
                 Localization = eventDto.Localization,
-                Artists = new List<Artist>()
+                Artists = new List<Artist>(),
+                NormalPrice = eventDto.NormalPrice,
+                VipPrice = eventDto.VipPrice,
+                
             };
 
         }
@@ -30,7 +33,9 @@ namespace api.Mappers
                 Descripton = eventModel.Descripton,
                 Date = eventModel.Date,
                 Localization = eventModel.Localization,
-                Artists = eventModel.Artists.Select(x => x.ToArtistDto()).ToList() ?? new List<ArtistDto>()
+                Artists = eventModel.Artists.Select(x => x.ToArtistDto()).ToList() ?? new List<ArtistDto>(),
+                NormalPrice = eventModel.NormalPrice,
+                VipPrice= eventModel.VipPrice,
             };
         }
     }

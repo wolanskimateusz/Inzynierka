@@ -11,15 +11,7 @@ interface TicketData{
 
 function TicketDetails() {
    
-const { id } = useParams<{ id: string }>();  // id może być undefined
-
-        if (id) {
-        const idAsNumber = +id;  // Konwertujemy id na number
-        console.log("ID jako liczba:", idAsNumber);
-        } else {
-        console.log("Brak parametru ID w URL");
-        }
-
+const { id } = useParams<{ id: string }>(); 
     const [data, setData] = useState<TicketData>()
     const [error, setError] = useState<String|null> (null)
     

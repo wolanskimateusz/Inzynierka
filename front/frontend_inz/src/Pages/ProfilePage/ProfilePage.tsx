@@ -54,7 +54,7 @@ function ProfilePage()
                         >
                           <span>{ticket.eventName}</span>
                           <Link
-                            to={`/ticket/${ticket.id}`} // Link do podstrony biletu
+                            to={`/ticket/${ticket.id}`} 
                             className="btn btn-primary btn-sm"
                           >
                             Szczegóły

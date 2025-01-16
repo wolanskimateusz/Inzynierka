@@ -10,5 +10,7 @@
         public DateTime Date { get; set; }
         public string Localization { get; set; } = string.Empty;
         public List<ArtistDto>? Artists {  get; set; }
+        public int NormalPrice { get; set; }
+        public int VipPrice { get; set; }
     }
 }

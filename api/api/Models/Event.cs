@@ -11,6 +11,8 @@ namespace api.Models
         public string Descripton { get; set; } = string.Empty;
         public DateTime Date { get; set; }
         public string Localization { get; set; } = string.Empty;
+        public int NormalPrice { get; set; }
+        public int VipPrice { get; set; }
 
         public List<Artist> Artists { get; set; } = new List<Artist>();
 
