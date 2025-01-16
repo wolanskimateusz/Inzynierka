@@ -59,6 +59,8 @@ namespace api.Repositories
             result.Localization = eventDto.Localization;
             result.Date = eventDto.Date;
             result.Descripton = eventDto.Descripton;
+            result.NormalPrice = eventDto.NormalPrice;
+            result.VipPrice = eventDto.VipPrice;
 
             await _context.SaveChangesAsync();
 
