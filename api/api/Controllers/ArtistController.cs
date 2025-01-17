@@ -2,6 +2,7 @@
 using api.Interfaces;
 using api.Mappers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace api.Controllers
@@ -23,7 +24,7 @@ namespace api.Controllers
 
             var result = await _artistRepo.GetAllAsync();
 
-            var artistDto = result.Select(x => x.ToArtistDto()).ToList();
+            var artistDto = result.Select(x => x.ToArtistDto()).Distinct().ToList();
 
             return Ok(artistDto);
         }
@@ -43,11 +44,15 @@ namespace api.Controllers
         public async Task<IActionResult> Create([FromBody] CreateArtistDto artistDto)
         {
             if(!ModelState.IsValid)  return BadRequest(ModelState); 
-
+            
             var artistModel = artistDto.ToArtistFromCreateDto();
-            await _artistRepo.CreateAsync(artistModel);
-
-            return CreatedAtAction(nameof(GetById), new { id = artistModel.Id }, artistModel.ToArtistDto());
+            var result = await _artistRepo.GetArtistByNameAsync(artistModel.Name);
+            if(result == null)
+            {
+                await _artistRepo.CreateAsync(artistModel);
+                return CreatedAtAction(nameof(GetById), new { id = artistModel.Id }, artistModel.ToArtistDto());
+            }
+            return BadRequest("Taki artysta już istnieje");
         }
 
         [HttpPut("{id}")]

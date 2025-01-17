@@ -7,7 +7,7 @@
         public string Descripton { get; set; } = string.Empty;
         public DateTime Date { get; set; }
         public string Localization { get; set; } = string.Empty;
-        public List<Artist> Artists { get; set; } = new List<Artist>();
+        public List<string> Artists { get; set; } = new List<string>();
         public int NormalPrice { get; set; }
         public int VipPrice { get; set; }
     }

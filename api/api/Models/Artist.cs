@@ -11,8 +11,7 @@ namespace api.Models
         public string Name { get; set; } = string.Empty;
         public string Genre { get; set; } = string.Empty;
 
-        public Event? Event { get; set; }
-        public int? EventId { get; set; }
+        public List<Event?> Event { get; set; } = new List<Event?>();
 
     }
 }

@@ -16,6 +16,7 @@ import { UserProvider } from "./Context/useAuth"
 import ProfilePage from "./Pages/ProfilePage/ProfilePage"
 import TicketDetails from "./Pages/TicketDetails/TicketDetails"
 import BuyTicket from "./Pages/BuyTicket/BuyTicket"
+import CreateEventPage from "./Pages/CreateEventPage/CreateEventPage"
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
         <Route path='/profile' element={<ProfilePage />} />
         <Route path='/ticket/:id' element={<TicketDetails />} />
         <Route path='/BuyTicket/:id' element={<BuyTicket />} />
+        <Route path='/event/create' element={<CreateEventPage />} />
       </Routes>
       <Footer></Footer>
       </UserProvider>

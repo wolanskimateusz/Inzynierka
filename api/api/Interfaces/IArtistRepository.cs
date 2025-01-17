@@ -12,6 +12,7 @@ namespace api.Interfaces
         Task<Artist?> DeleteAsync(int id);
         Task<List<GenreDto>> GetGenresAsync();
         Task<List<Artist>?> GetArtistsByGenreAsync(string genre);
+        Task<Artist?> GetArtistByNameAsync(string name);
            
 
     }

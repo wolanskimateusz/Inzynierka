@@ -1,5 +1,8 @@
+  
 function BuyTicket()
 {
-    return <></>
+
+    
+      return (<></>    )
 }
 export default BuyTicket

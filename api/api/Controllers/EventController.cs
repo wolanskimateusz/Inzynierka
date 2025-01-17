@@ -3,6 +3,7 @@ using api.Dtos.Artist;
 using api.Dtos.Event;
 using api.Interfaces;
 using api.Mappers;
+using api.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -43,7 +44,18 @@ namespace api.Controllers
         public async Task<IActionResult> Create([FromBody] CreateEventDto eventDto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
+            
+            List<Artist> ArtistList = new List<Artist>();
+
+            foreach(string element in eventDto.Artists)
+            {
+                Artist artist = await _artistRepo.GetArtistByNameAsync(element);
+                if (artist == null) continue;
+                ArtistList.Add(artist);
+            }
+
             var eventModel = eventDto.ToEventFromCreateDto();
+            eventModel.Artists = ArtistList;
 
             await _eventRepo.CreateAsync(eventModel);
 

@@ -17,6 +17,7 @@ namespace api.Repositories
 
         public async Task<Artist?> CreateAsync(Artist artistModel)
         {
+            
             await _context.AddAsync(artistModel);
             await _context.SaveChangesAsync();
 
@@ -77,6 +78,13 @@ namespace api.Repositories
 
             await _context.SaveChangesAsync();
 
+            return result;
+        }
+
+        public async Task<Artist?> GetArtistByNameAsync(string name)
+        {
+            var result = await _context.Artists.FirstOrDefaultAsync(x => x.Name == name);
+            if (result == null) return null;
             return result;
         }
     }

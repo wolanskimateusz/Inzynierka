@@ -36,9 +36,7 @@ namespace api.Repositories
 
         public async Task<List<Event>> GetAllAsync()
         {
-            var results = await _context
-                .Events
-                .Include(x => x.Artists).ToListAsync();
+            var results = await _context .Events.Include(x => x.Artists).ToListAsync();
 
             return results;
         }
@@ -83,14 +81,18 @@ namespace api.Repositories
 
         public async Task<List<Artist>?> AddArtistToEventAsync(int eventId, int artistId)
         {
-            var artistResult = await _context.Artists.FirstOrDefaultAsync(x => x.Id == artistId);
-            if(artistResult == null) return null;
-      
-            var eventResult = await _context.Events.FirstOrDefaultAsync(x => x.Id == eventId);
+            var artistResult = await _context.Artists.FirstOrDefaultAsync(a => a.Id == artistId);
+            if (artistResult == null) return null;
+
+            var eventResult = await _context.Events.Include(e => e.Artists).FirstOrDefaultAsync(e => e.Id == eventId);
             if (eventResult == null) return null;
 
-            artistResult.EventId = eventId;
-            eventResult.Artists.Add(artistResult);
+            if (!eventResult.Artists.Contains(artistResult))
+            {
+                eventResult.Artists.Add(artistResult);
+                await _context.SaveChangesAsync();
+            }
+
             await _context.SaveChangesAsync();
 
 
@@ -100,14 +102,14 @@ namespace api.Repositories
 
         public async Task<Artist?> DeleteArtistFromEventAsync(int eventId, int artistId)
         {
-            var eventResult = await _context.Events.FirstOrDefaultAsync(x => x.Id == eventId);
+            var eventResult = await _context.Events.Include(e => e.Artists).FirstOrDefaultAsync(e => e.Id == eventId);
+
             if (eventResult == null) return null;
 
             var artistResult = await _context.Artists.FirstOrDefaultAsync(x => x.Id == artistId);
             if (artistResult == null) return null;
 
             eventResult.Artists.Remove(artistResult);
-            artistResult.EventId = null;
 
             await _context.SaveChangesAsync();
 
