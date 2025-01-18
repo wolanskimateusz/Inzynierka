@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using api.Dtos.Artist;
 
+
 namespace api.Repositories
 {
     public class EventRepository : IEventRepository
@@ -34,6 +35,7 @@ namespace api.Repositories
             return result;
         }
 
+        
         public async Task<List<Event>> GetAllAsync()
         {
             var results = await _context .Events.Include(x => x.Artists).ToListAsync();

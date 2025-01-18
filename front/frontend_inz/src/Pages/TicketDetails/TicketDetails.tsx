@@ -35,7 +35,7 @@ const { id } = useParams<{ id: string }>();
 
 
   return (
-    <div className="container mt-5">
+    <div className="container m-5">
       <h1>Szczegóły biletu</h1>
       <div className="card shadow-sm">
         <div className="card-body">

@@ -49,7 +49,7 @@ namespace api.Controllers
                             {
                                 UserName = appUser.UserName,
                                 Email = appUser.Email,
-                                Token = _tokenService.CreateToken(appUser)
+                                Token = _tokenService.CreateToken(appUser, "User")
                             }
                         );
                     }
@@ -78,12 +78,16 @@ namespace api.Controllers
 
             if (!result.Succeeded) return Unauthorized("Wrong username or password!");
 
+            var roles = await _userManager.GetRolesAsync(user);
+            var userRole = roles.FirstOrDefault();
+            if (userRole == null) { userRole = "User"; }
+
             return Ok(
                 new NewUserDto
                 {
                     UserName = user.UserName,
                     Email = user.Email,
-                    Token = _tokenService.CreateToken(user)
+                    Token = _tokenService.CreateToken(user,userRole)
                 });
                 
 
@@ -96,6 +100,46 @@ namespace api.Controllers
             var user = await _userRepository.GetByNameAsync(name);
             if (user == null) return NotFound();
             return Ok(user.ToUserDto());
+        }
+
+        [HttpPost("registerAdmin")]
+        public async Task<IActionResult> RegisterAdmin([FromBody] RegisterDto registerDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid) return BadRequest(ModelState);
+
+                var appUser = new AppUser
+                {
+                    UserName = registerDto.Username,
+                    Email = registerDto.Email
+                };
+
+                var createdUser = await _userManager.CreateAsync(appUser, registerDto.Password);
+
+                if (createdUser.Succeeded)
+                {
+                    var roleResult = await _userManager.AddToRoleAsync(appUser, "Admin");
+                    if (roleResult.Succeeded)
+                    {
+                        return Ok(new NewUserDto
+                        {
+                            UserName = appUser.UserName,
+                            Email = appUser.Email,
+                            Token = _tokenService.CreateToken(appUser,"Admin")
+                        }
+                        );
+                    }
+                    else return StatusCode(500, roleResult.Errors);
+                }
+                else return StatusCode(500, createdUser.Errors);
+
+
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e);
+            }
         }
     }
 }

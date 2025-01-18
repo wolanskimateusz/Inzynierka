@@ -4,6 +4,7 @@ using api.Dtos.Event;
 using api.Interfaces;
 using api.Mappers;
 using api.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -19,7 +20,7 @@ namespace api.Controllers
             _eventRepo = eventRepo;
             _artistRepo = artistRepo;
         }
-
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -30,7 +31,7 @@ namespace api.Controllers
 
             return Ok(eventDto);
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
