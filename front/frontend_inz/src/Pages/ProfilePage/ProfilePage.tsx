@@ -34,7 +34,7 @@ function ProfilePage()
 
 
         return (
-            <div className="container mt-5">
+            <div className="container m-5">
               <div className="card shadow-sm">
                 <div className="card-body">
                   <h1 className="card-title">Profil użytkownika</h1>

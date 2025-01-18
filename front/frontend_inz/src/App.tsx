@@ -17,6 +17,7 @@ import ProfilePage from "./Pages/ProfilePage/ProfilePage"
 import TicketDetails from "./Pages/TicketDetails/TicketDetails"
 import BuyTicket from "./Pages/BuyTicket/BuyTicket"
 import CreateEventPage from "./Pages/CreateEventPage/CreateEventPage"
+import ArtistCreatePage from "./Pages/ArtistCreatePage/ArtistCreatePage"
 
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
         <Route path='/ticket/:id' element={<TicketDetails />} />
         <Route path='/BuyTicket/:id' element={<BuyTicket />} />
         <Route path='/event/create' element={<CreateEventPage />} />
+        <Route path='/artist/create' element={<ArtistCreatePage />} />
       </Routes>
       <Footer></Footer>
       </UserProvider>

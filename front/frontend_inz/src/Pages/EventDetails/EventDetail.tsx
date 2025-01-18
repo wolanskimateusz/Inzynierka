@@ -36,7 +36,7 @@ function EventDetails(){
       }
 
       return (
-        <div className="container mt-5">
+        <div className="container m-5">
           <h1 className="mb-4">{data.name}</h1>
     
           <div className="card shadow-sm">
