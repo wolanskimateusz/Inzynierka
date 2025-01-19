@@ -44,7 +44,7 @@ function SearchBar(){
                 <input
                     type="text"
                     className="form-control"
-                    placeholder="Search events..."
+                    placeholder="Wyszukaj wydarzenia..."
                     aria-label="Search events"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)} 

@@ -56,7 +56,7 @@ function EventDetails(){
               <p className="card-text">{data.descripton}</p>
     
               <div className="row">
-                <div className="col-6">
+                <div className="col-6 mb-4">
                   <p><strong>Data:</strong> {new Date(data.date).toLocaleString()}</p>
                   <p><strong>Lokalizacja:</strong> {data.localization}</p>
                 </div>
@@ -72,7 +72,7 @@ function EventDetails(){
                 </div>
               </div>
             </div>
-            <Link to={`/buyTicket/${id}`} className="btn btn-primary position-absolute bottom-0 start-0 m-3">
+            <Link to={`/buyTicket/${id}`} className="btn btn-primary position-absolute bottom-0 start-0 m-2">
           Kup Bilet
         </Link>
           </div>
