@@ -1,4 +1,5 @@
 ﻿using api.Dtos.Event;
+using api.Helpers;
 using api.Models;
 
 namespace api.Interfaces
@@ -6,7 +7,7 @@ namespace api.Interfaces
     public interface IEventRepository
     {
 
-        Task<List<Event>> GetAllAsync();
+        Task<List<Event>> GetAllAsync(QueryObject query);
         Task<Event?> GetByIdAsync(int id);
         Task<Event> CreateAsync(Event eventModel);
         Task<Event?> UpdateAsync(int id, UpdateEventDto eventDto);

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify";
 
@@ -16,6 +16,7 @@ function EventDetails(){
 
   const navigate = useNavigate()
     const { id } = useParams<{ id: string }>();  
+    const location = useLocation();
 
     const [data, setData] = useState<EventData>()
     const [error, setError] = useState<String|null> (null)
@@ -39,7 +40,7 @@ function EventDetails(){
         }
     useEffect(()=>{
         fetchEventData()
-    },[])
+    },[location])
 
     if (!data) {
         return <div className="spinner-border text-primary" role="status"></div>; 

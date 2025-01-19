@@ -1,6 +1,7 @@
 ﻿using api.Data;
 using api.Dtos.Artist;
 using api.Dtos.Event;
+using api.Helpers;
 using api.Interfaces;
 using api.Mappers;
 using api.Models;
@@ -21,10 +22,10 @@ namespace api.Controllers
             _artistRepo = artistRepo;
         }
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] QueryObject query)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            var result = await _eventRepo.GetAllAsync();
+            var result = await _eventRepo.GetAllAsync(query);
            
             var eventDto = result.Select(x => x.ToEventDto()).ToList();
 

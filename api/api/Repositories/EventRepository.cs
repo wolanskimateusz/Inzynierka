@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using api.Dtos.Artist;
+using api.Helpers;
 
 
 namespace api.Repositories
@@ -36,11 +37,21 @@ namespace api.Repositories
         }
 
         
-        public async Task<List<Event>> GetAllAsync()
+        public async Task<List<Event>> GetAllAsync(QueryObject query)
         {
-            var results = await _context .Events.Include(x => x.Artists).ToListAsync();
+            var results =  _context.Events.Include(x => x.Artists).AsQueryable();
 
-            return results;
+            if(!string.IsNullOrWhiteSpace(query.EventName))
+            {
+                results = results.Where(x => x.Name.Contains(query.EventName));
+            }
+
+            if (query.Date.HasValue)
+            {
+                results = results.Where(x => x.Date.Date == query.Date.Value.Date);
+            }
+        
+            return await results.ToListAsync();
         }
 
         public async Task<Event?> GetByIdAsync(int id)

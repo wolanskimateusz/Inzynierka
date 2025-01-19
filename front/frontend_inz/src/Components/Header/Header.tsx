@@ -1,4 +1,5 @@
 import { useAuth } from "../../Context/useAuth"
+import SearchBar from "../SearchBar/SearchBar"
 
 function Header()
 {
@@ -34,17 +35,7 @@ function Header()
         </nav>
 
         {/* Wyszukiwarka */}
-        <div className="input-group w-25">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Search concerts, artists..."
-            aria-label="Search concerts"
-          />
-          <div className="input-group-append">
-            <button className="btn btn-outline-light" type="button">Wyszukaj</button>
-          </div>
-        </div>
+        <SearchBar></SearchBar>
 
         {isLoggedIn() ? (
           <div>
