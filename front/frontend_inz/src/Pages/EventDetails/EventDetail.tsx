@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify";
 
 interface EventData{
     name: string
@@ -12,6 +14,7 @@ interface EventData{
 
 function EventDetails(){
 
+  const navigate = useNavigate()
     const { id } = useParams<{ id: string }>();  
 
     const [data, setData] = useState<EventData>()
@@ -24,7 +27,14 @@ function EventDetails(){
                 setData(response.data)
             }
                 catch(e : any){
-                setError(e.message)
+                  if (e.response && e.response.status === 403) {
+                    // Jeśli błąd to 403, przekierowujemy użytkownika na stronę logowania
+                    navigate("/")
+                    toast.warning("Nie masz uprawnień dla tej strony")
+                } else {
+                    // Jeśli błąd nie jest 403, ustawiamy komunikat o błędzie
+                    setError(e.message);
+                }
             }
         }
     useEffect(()=>{

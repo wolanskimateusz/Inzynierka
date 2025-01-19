@@ -20,7 +20,6 @@ namespace api.Controllers
             _eventRepo = eventRepo;
             _artistRepo = artistRepo;
         }
-        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -31,7 +30,6 @@ namespace api.Controllers
 
             return Ok(eventDto);
         }
-        [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
@@ -40,7 +38,7 @@ namespace api.Controllers
             if (result == null) return NotFound();
             return Ok(result.ToEventDto());
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateEventDto eventDto)
         {
@@ -62,7 +60,7 @@ namespace api.Controllers
 
             return CreatedAtAction(nameof(GetById), new { id = eventModel.Id }, eventModel.ToEventDto());
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateEventDto eventDto)
         {
@@ -71,7 +69,7 @@ namespace api.Controllers
             if (result == null) return NotFound();
             return Ok(result);
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
@@ -129,6 +127,19 @@ namespace api.Controllers
 
             return Ok(result);
         }
-        
+
+        [HttpGet("eventList")]
+        public async Task<IActionResult> GetArtistList(int artistId)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var result = await _eventRepo.GetEventsWtihArtistByIdAsync(artistId);
+            if (result == null) return NotFound();
+
+            return Ok(result);
+        }
+
     }
+
+    
 }

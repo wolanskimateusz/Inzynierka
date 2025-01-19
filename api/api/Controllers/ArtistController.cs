@@ -1,6 +1,7 @@
 ﻿using api.Dtos.Artist;
 using api.Interfaces;
 using api.Mappers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -39,7 +40,7 @@ namespace api.Controllers
 
             return Ok(result.ToArtistDto());  
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateArtistDto artistDto)
         {
@@ -54,7 +55,7 @@ namespace api.Controllers
             }
             return BadRequest("Taki artysta już istnieje");
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateArtistDto aristModel)
         {
@@ -64,7 +65,7 @@ namespace api.Controllers
             if (result == null) return NotFound();
             return Ok(result);
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {

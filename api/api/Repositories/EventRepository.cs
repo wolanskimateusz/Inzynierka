@@ -118,6 +118,16 @@ namespace api.Repositories
             return artistResult;
         }
 
+        public async Task<List<EventListDto>> GetEventsWtihArtistByIdAsync(int artistId)
+        {
+            var eventResult = await _context.Events.Include(x => x.Artists)
+                .Where(e => e.Artists.Any(a => a.Id == artistId))
+                .ToListAsync();
+            if (eventResult == null) return null;
+
+            return eventResult.Select(e => e.ToEventListDto()).ToList(); 
+        }
+
 
     }
 }

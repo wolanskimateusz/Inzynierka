@@ -2,6 +2,7 @@
 using api.Dtos.Ticket;
 using api.Interfaces;
 using api.Mappers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 
@@ -22,7 +23,7 @@ namespace api.Controllers
             _eventRepo = eventRepo; 
             _userRepo = userRepo;
         }
-
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -33,7 +34,7 @@ namespace api.Controllers
            var ticketDto = results.Select(x => x.ToTicketDto()).ToList();
            return Ok(ticketDto);
         }
-
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromRoute]int id)
         {
@@ -44,7 +45,7 @@ namespace api.Controllers
             result.Event = evresult;
            return Ok(result.ToTicketDto());
         }
-
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody]CreateTicketDto ticketDto)
         {
@@ -77,7 +78,7 @@ namespace api.Controllers
 
 
         }
-
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {

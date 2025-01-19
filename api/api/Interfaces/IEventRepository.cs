@@ -17,6 +17,7 @@ namespace api.Interfaces
 
         Task<List<Artist>?> AddArtistToEventAsync(int eventId, int artistId);
         Task<Artist?> DeleteArtistFromEventAsync(int eventId, int artistId);
+        Task<List<EventListDto>> GetEventsWtihArtistByIdAsync(int artistId);
 
 
     }

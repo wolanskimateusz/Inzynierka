@@ -18,6 +18,7 @@ import TicketDetails from "./Pages/TicketDetails/TicketDetails"
 import BuyTicket from "./Pages/BuyTicket/BuyTicket"
 import CreateEventPage from "./Pages/CreateEventPage/CreateEventPage"
 import ArtistCreatePage from "./Pages/ArtistCreatePage/ArtistCreatePage"
+import ProtectedRoute from "./Helpers/ProtectedRoute"
 
 
 function App() {
@@ -38,11 +39,11 @@ function App() {
         <Route path='/artist/genre/:genre' element={<ArtistsGenresPage />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
-        <Route path='/profile' element={<ProfilePage />} />
+        <Route path='/profile' element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
         <Route path='/ticket/:id' element={<TicketDetails />} />
         <Route path='/BuyTicket/:id' element={<BuyTicket />} />
-        <Route path='/event/create' element={<CreateEventPage />} />
-        <Route path='/artist/create' element={<ArtistCreatePage />} />
+        <Route path='/event/create' element={<ProtectedRoute><CreateEventPage /></ProtectedRoute>} />
+        <Route path='/artist/create' element={<ProtectedRoute><ArtistCreatePage /></ProtectedRoute>} />
       </Routes>
       <Footer></Footer>
       </UserProvider>

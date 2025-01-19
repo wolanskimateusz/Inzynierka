@@ -38,5 +38,14 @@ namespace api.Mappers
                 VipPrice= eventModel.VipPrice,
             };
         }
+
+        public static EventListDto ToEventListDto(this Event eventModel)
+        {
+            return new EventListDto
+            {
+                Id = eventModel.Id,
+                Name = eventModel.Name,
+            };
+        }
     }
 }

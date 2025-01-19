@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 
@@ -26,6 +26,7 @@ function BuyTicket()
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<boolean>(false);
+  const navigate = useNavigate()
 
   const fetchEventData = async () => {
            try{
@@ -82,7 +83,13 @@ function BuyTicket()
       await Promise.all(requests);
       setSuccess(true);
       toast.success("Bilety zostały utworzone pomyślnie!");
-    } catch (err) {
+    } catch (e:any) {
+      if (axios.isAxiosError(e) && e.response?.status === 401) {
+        navigate("/login")
+        toast.warning("Zaloguj się")
+    } else {
+        setError(e.message);
+    }
       setError("Nie udało się utworzyć biletów. Spróbuj ponownie.");
       toast.error("Nie udało się utworzyć biletów. Spróbuj ponownie.");
     } finally {
@@ -130,7 +137,7 @@ function BuyTicket()
         </div>
     
         <button type="submit" className="btn btn-primary" disabled={loading}>
-          {loading ? "Tworzenie..." : "Utwórz Bilety"}
+          {loading ? "Tworzenie..." : "Kup bilet"}
         </button>
       </form>
     

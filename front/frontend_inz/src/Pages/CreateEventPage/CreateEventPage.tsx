@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 type Artist = {
@@ -31,6 +31,7 @@ function CreateEventPage() {
 
     const [availableArtists, setAvailableArtists] = useState<string[]>([]); // Tablica nazw artystów
     const [selectedArtistName, setSelectedArtistName] = useState<string | null>(null);
+    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchArtists = async () => {
@@ -59,16 +60,16 @@ function CreateEventPage() {
         if (selectedArtistName !== null && !formData.artists.includes(selectedArtistName)) {
             setFormData({
                 ...formData,
-                artists: [...formData.artists, selectedArtistName], // Dodajemy tylko nazwę artysty
+                artists: [...formData.artists, selectedArtistName],
             });
-            setSelectedArtistName(null); // Resetujemy wybranego artystę
+            setSelectedArtistName(null); 
         }
     };
 
     const handleRemoveArtist = (name: string) => {
         setFormData({
             ...formData,
-            artists: formData.artists.filter((artistName) => artistName !== name), // Usuwamy artystę po nazwie
+            artists: formData.artists.filter((artistName) => artistName !== name), 
         });
     };
 
@@ -91,7 +92,14 @@ function CreateEventPage() {
             setSelectedArtistName(null);
             return response.data;
         } catch (error: any) {
-            toast.warning(error.message);
+            if(error.response && error.response.status === 403){
+                navigate("/")
+                toast.warning("Nie masz uprawnień dla tej strony")
+            }
+            if(error.response && error.response.status === 401){
+                navigate("/login")
+                toast.warning("Zaloguj się")
+            }
         }
     };
 
