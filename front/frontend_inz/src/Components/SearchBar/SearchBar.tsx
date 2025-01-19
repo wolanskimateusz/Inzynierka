@@ -39,35 +39,35 @@ function SearchBar(){
 
     return (
         <div>
-            {/* Wyszukiwarka */}
-            <div className="input-group" style={{ width: '150%' }}> {/* Zmieniamy szerokość paska wyszukiwania */}
+           
+            <div className="input-group" > 
                 <input
                     type="text"
                     className="form-control"
                     placeholder="Search events..."
                     aria-label="Search events"
                     value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)} // Aktualizacja zapytania przy wpisywaniu
+                    onChange={(e) => setSearchQuery(e.target.value)} 
                 />
             </div>
 
-            {/* Wyniki wyszukiwania */}
+      
             {result && result.length > 0 && (
                 <div 
                     style={{ 
-                        position: 'absolute',  // Pozycjonowanie listy nad innymi elementami
-                        zIndex: 9999,  // Ustawienie wyższego z-index, aby lista była nad innymi elementami
-                        backgroundColor: 'white',  // Dodanie tła dla lepszej czytelności
-                        width: '40%',  // Dopasowanie szerokości do paska wyszukiwania
-                        boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',  // Cień dla lepszego wyglądu
+                        position: 'absolute',  
+                        zIndex: 9999, 
+                        backgroundColor: 'white',  
+                        width: '40%',  
+                        boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',  
                     }}
                 >
                     {result.map((event) => (
                         <Link
                             key={event.id} 
-                            to={`/event/${event.id}`}  // Link do strony wydarzenia
-                            className="text-decoration-none" // Usuwamy podkreślenie linku
-                            style={{ display: 'block', padding: '10px', borderBottom: '1px solid #ccc' }} // Stylowanie całego divu
+                            to={`/event/${event.id}`}  
+                            className="text-decoration-none" 
+                            style={{ display: 'block', padding: '10px', borderBottom: '1px solid #ccc' }} 
                             onClick={handleEventClick} 
                         >
                             <div>
@@ -78,10 +78,6 @@ function SearchBar(){
                 </div>
             )}
 
-            {/* Jeśli brak wyników */}
-            {result && result.length === 0 && (
-                <p className="mt-3">Brak wydarzeń pasujących do zapytania.</p>
-            )}
         </div>
     );
 }
