@@ -48,7 +48,7 @@ function ArtistDetails(){
     return (
         <div className="container m-5">
           <div className="row">
-            <div className="col-md-6 offset-md-3">
+            <div className="col-md-6 offset-md-5">
               <div className="card shadow">
                 <div className="card-body">
                   <h3 className="card-title text-center">Szczegóły Artysty</h3>

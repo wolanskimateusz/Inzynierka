@@ -80,10 +80,12 @@ namespace api.Repositories
 
         public async Task<List<Event>?> GetLatestAsync()
         {
-            var result = await _context.Events.Include(x => x.Artists)
-                .OrderByDescending(x => x.Date)
-                .Take(3)
-                .ToListAsync();
+            var result = await _context.Events
+             .Include(x => x.Artists)
+             .Where(x => x.Date >= DateTime.UtcNow) 
+             .OrderBy(x => x.Date) 
+             .Take(3)
+             .ToListAsync();
 
             if (result == null) return null;
 
